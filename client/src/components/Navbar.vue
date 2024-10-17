@@ -35,7 +35,6 @@ export default {
 </script>
 
 <style scoped>
-
 body {
     font-weight: 300;
     font-size: 15px;

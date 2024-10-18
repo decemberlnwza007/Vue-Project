@@ -67,17 +67,32 @@ const BASE_URL = 'http://localhost:8000';
 const handleSubmit = async () => {
   if (currentStep.value === 1) {
     if (!eml.value || !pw1.value || !pw2.value) {
-      alert('Please fill in all fields.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Please fill in all fields!',
+        showConfirmButton: true,
+        confirmButtonColor: '#6a11cb'
+      })
       return;
     }
     if (pw1.value !== pw2.value) {
-      alert('Passwords do not match.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Passwords do not match!',
+        showConfirmButton: true,
+        confirmButtonColor: '#6a11cb'
+      })
       return;
     }
     currentStep.value = 2;
   } else {
     if (!firstName.value || !lastName.value || !dob.value || !phone.value) {
-      alert('Please fill in all fields.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Please fill in all fields!',
+        showConfirmButton: true,
+        confirmButtonColor: '#6a11cb'
+      })
       return;
     }
 
@@ -156,7 +171,6 @@ body {
   background: white;
   text-align: center;
   overflow: hidden;
-  /* Prevent overflow */
 }
 
 h2 {

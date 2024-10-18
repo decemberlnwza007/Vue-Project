@@ -2,3 +2,31 @@
 *{
   font-family: "Inter", "Kanit";
 }
+
+:root{
+  --background-color: white;
+  --text-color: black;
+}
+
+.dark-theme{
+  --background-color: black;
+  --text-color: white;
+}
+
+body{
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: 0.5s;
+}
+
+.table{
+  background-color: var(--background-color);
+}
+
+.table th{
+  background-color: #6a11cb;
+}
+
+.table td{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}

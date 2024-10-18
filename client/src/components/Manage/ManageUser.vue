@@ -2,35 +2,39 @@
     <div>
         <Navbar />
     </div>
-    <br>
-    <br>
-    <br>
+    <br />
+    <br />
+    <br />
+
     <div class="my-5">
         <div class="content">
-            <div class="container body shadow mb-5 p-5 rouded">
+            <div class="container body shadow mb-5 p-5 rounded">
+                <SwitchTheme />
                 <div class="row mb-4">
                     <div class="col-md-8 mx-auto">
                         <input v-model="searchQuery" type="text" class="form-control"
                             placeholder="Search by name or address..." />
                     </div>
                 </div>
-                <table class="table">
+                <table class="table table-responsive">
                     <thead align="center">
                         <tr>
-                            <th>Name</th>
-                            <th>Lastname</th>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Birthday</th>
-                            <th>Salary</th>
-                            <th>Address</th>
+                            <th>Phone</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, index) in filteredHistory" :key="index" align="center">
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.lastname }}</td>
+                        <tr v-for="(item, index) in filteredUsers" :key="index" align="center">
+                            <td>{{ item.user_id }}</td>
+                            <td>{{ item.user_email }}</td>
+                            <td>{{ item.user_fname }}</td>
+                            <td>{{ item.user_lname }}</td>
                             <td>{{ item.birthday }}</td>
-                            <td>{{ item.salary }}</td>
-                            <td>{{ item.address }}</td>
+                            <td>{{ item.user_phone }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -40,35 +44,39 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import Navbar from '../Navbar/Navbar.vue';
+import { onMounted, ref, computed } from 'vue';
 import axios from 'axios';
-import Navbar from './Navbar.vue';
 
 const BASE_URL = 'http://localhost:8000';
-const histories = ref([]);
+const users = ref([]);
 const searchQuery = ref('');
 
-const fetchHistory = async () => {
+const fetchUser = async () => {
     try {
-        const response = await axios.get(`${BASE_URL}/history`);
-        histories.value = response.data;
+        const response = await axios.get(`${BASE_URL}/user`);
+        console.log(response);
+        users.value = response.data;
     } catch (error) {
-        console.error('Error fetching history:', error);
+        console.error('Error fetching User:', error);
     }
 };
 
-const filteredHistory = computed(() => {
+const filteredUsers = computed(() => {
     const query = searchQuery.value.toLowerCase();
-    return histories.value.filter(item => {
+    return users.value.filter(item => {
         return (
-            item.name.toLowerCase().includes(query) ||
-            item.address.toLowerCase().includes(query)
+            item.user_email.toLowerCase().includes(query) ||
+            item.user_fname.toLowerCase().includes(query) ||
+            item.user_lname.toLowerCase().includes(query) ||
+            item.birthday.toLowerCase().includes(query) ||
+            item.user_phone.toLowerCase().includes(query)
         );
     });
 });
 
 onMounted(() => {
-    fetchHistory();
+    fetchUser();
 });
 </script>
 
@@ -126,18 +134,20 @@ onMounted(() => {
     box-shadow: 0 0 5px rgba(106, 17, 203, 0.3);
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
+/* Media queries for responsive design */
+@media (max-width: 768px) {
 
-input:focus {
-  border-color: #6a11cb;
-  box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
-  outline: none;
-}
+    .table th,
+    .table td {
+        padding: 8px;
+        /* Smaller padding on mobile */
+        font-size: 14px;
+        /* Smaller text on mobile */
+    }
 
+    .form-control {
+        font-size: 14px;
+        /* Smaller input text */
+    }
+}
 </style>

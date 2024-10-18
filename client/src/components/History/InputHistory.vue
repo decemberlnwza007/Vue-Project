@@ -60,7 +60,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import Navbar from './Navbar.vue';
+import Navbar from '../Navbar/Navbar.vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 

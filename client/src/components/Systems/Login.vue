@@ -2,7 +2,7 @@
   <div class="my-5">
     <center>
       <div class="login-container">
-        <h2>Welcome!</h2>
+        <h2>Login</h2>
         <form @submit.prevent="login">
           <div class="input-group">
             <label for="email">Email</label>
@@ -50,7 +50,7 @@ const login = async () => {
       title: "Email or Password is incorrect!",
       text: "Please double check you Email or Password",
       icon: "error",
-      confirmButtonColor: '#6a11cb'
+      confirmButtonColor: '#6a11cb',
     });
   }
 }

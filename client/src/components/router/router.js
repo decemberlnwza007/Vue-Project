@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 // Component
-import Register from './../Register.vue'
-import InputHistory from './../InputHistory.vue'
+import Register from '../Systems/Register.vue'
+import InputHistory from '../History/InputHistory.vue'
 import Home from './../Home.vue'
-import Login from './../Login.vue'
-import ManageHistory from "../ManageHistory.vue";
-import ManageUser from "../ManageUser.vue";
+import Login from '../Systems/Login.vue'
+import ManageHistory from "../Manage/ManageHistory.vue";
+import ManageUser from "../Manage/ManageUser.vue";
 import { getAuth } from "./auth";
 
 

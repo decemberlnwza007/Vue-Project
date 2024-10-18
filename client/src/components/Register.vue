@@ -46,6 +46,11 @@
 
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 let currentStep = ref(1);
 let eml = ref('');
@@ -55,8 +60,11 @@ let firstName = ref('');
 let lastName = ref('');
 let dob = ref('');
 let phone = ref('');
+let errorMessage = ref('');
 
-const handleSubmit = () => {
+const BASE_URL = 'http://localhost:8000';
+
+const handleSubmit = async () => {
   if (currentStep.value === 1) {
     if (!eml.value || !pw1.value || !pw2.value) {
       alert('Please fill in all fields.');
@@ -72,26 +80,56 @@ const handleSubmit = () => {
       alert('Please fill in all fields.');
       return;
     }
-    console.log('User registered:', {
-      email: eml.value,
-      password: pw1.value,
-      firstName: firstName.value,
-      lastName: lastName.value,
-      dob: dob.value,
-      phone: phone.value
-    });
 
-    eml.value = '';
-    pw1.value = '';
-    pw2.value = '';
-    firstName.value = '';
-    lastName.value = '';
-    dob.value = '';
-    phone.value = '';
-    currentStep.value = 1; 
+    try {
+      const response = await axios.post(`${BASE_URL}/register`, {
+        user_email: eml.value,
+        user_pass: pw1.value,
+        user_fname: firstName.value,
+        user_lname: lastName.value,
+        birthday: dob.value,
+        user_phone: phone.value,
+      });
+
+      eml.value = '';
+      pw1.value = '';
+      pw2.value = '';
+      firstName.value = '';
+      lastName.value = '';
+      dob.value = '';
+      phone.value = '';
+      currentStep.value = 1;
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Register Successfully!',
+        showConfirmButton: true,
+        confirmButtonColor: '#6a11cb'
+      }).then(() => {
+        router.push('/')
+      })
+    } catch (error) {
+      if (error.response) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration failed please try again!',
+          showConfirmButton: true,
+          confirmButtonColor: '#6a11cb'
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration failed please try again!',
+          showConfirmButton: true,
+          confirmButtonColor: '#6a11cb'
+        })
+      }
+      console.error(error);
+    }
   }
 };
 </script>
+
 
 <style scoped>
 * {
@@ -117,7 +155,8 @@ body {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
   background: white;
   text-align: center;
-  overflow: hidden; /* Prevent overflow */
+  overflow: hidden;
+  /* Prevent overflow */
 }
 
 h2 {
@@ -197,7 +236,7 @@ input:focus {
   }
 
   .input-group {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
   }
 
   .submit-button {
@@ -205,7 +244,7 @@ input:focus {
   }
 
   .footer-text {
-    font-size: 12px; 
+    font-size: 12px;
   }
 }
 </style>

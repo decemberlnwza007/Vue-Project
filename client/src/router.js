@@ -3,9 +3,11 @@ import { createRouter, createWebHistory } from "vue-router";
 // Component
 import Register from "./components/Register.vue";
 import InputHistory from "./components/InputHistory.vue";
-import AddCart from "./components/AddCart.vue";
 import Home from "./components/Home.vue";
 import Login from "./components/Login.vue";
+import ManageHistory from "./components/ManageHistory.vue";
+import ManageUser from "./components/ManageUser.vue";
+
 
 const routes = [
     {
@@ -24,14 +26,19 @@ const routes = [
         component: Register
     },
     {
-        path: '/cart',
-        name: 'Cart',
-        component: AddCart
-    },
-    {
         path: '/history',
         name: 'History',
         component: InputHistory
+    },
+    {
+        path: '/manage',
+        name: 'Manage',
+        component: ManageHistory
+    },
+    {
+        path: '/manageuser',
+        name: 'ManageUser',
+        component: ManageUser
     }
 ]
 

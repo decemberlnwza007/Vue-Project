@@ -15,13 +15,18 @@
                 </router-link>
             </li>
             <li>
-                <router-link to="/cart">
-                    <a>Cart</a>
+                <router-link to="/manage">
+                    <a>MANAGE HISTORY</a>
+                </router-link>
+            </li>
+            <li>
+                <router-link to="/manageuser">
+                    <a>MANAGE USER</a>
                 </router-link>
             </li>
             <li>
                 <router-link to="/">
-                    <a>Logout</a>
+                    <a><b>Logout</b></a>
                 </router-link>
             </li>
         </ul>
@@ -35,6 +40,12 @@ export default {
 </script>
 
 <style scoped>
+
+b:hover{
+    color: red;
+    transition: all 250ms linear;
+}
+
 body {
     font-weight: 300;
     font-size: 15px;

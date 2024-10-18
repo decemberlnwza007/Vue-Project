@@ -3,7 +3,7 @@
         <Navbar />
     </div>
     <div id="app">
-        <form class="row g-3 p-4 mx-auto" style="max-width: 640px;">
+        <form class="row g-3 p-4 mx-auto" style="max-width: 640px;" @submit.prevent="handleSubmit" >
             <div class="col-sm-6">
                 <label for="fn" class="form-label">Name</label>
                 <input type="text" id="fn" class="form-control" v-model.trim="firstname" required />
@@ -61,12 +61,47 @@
 <script setup>
 import { ref } from 'vue';
 import Navbar from './Navbar.vue';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+
+const BASE_URL = 'http://localhost:8000'
 
 let firstname = ref('');
 let lastname = ref('');
 let birthday = ref('');
 let salary = ref();
 let address = ref('');
+
+const handleSubmit = async () => {
+    try {
+        const response = await axios.post(`${BASE_URL}/history`, {
+            name: firstname.value,
+            lastname: lastname.value,
+            birthday: birthday.value,
+            salary: salary.value,
+            address: address.value
+        })
+
+        
+
+        localStorage.setItem('token', response.data.token);
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Add history successfully!',
+            confirmButtonColor: '#6a11cb',
+            showConfirmButton: true
+        })
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Please Try again!',
+            confirmButtonColor: '#6a11cb',
+            showConfirmButton: true
+        })
+        console.log(error)
+    }
+} 
 </script>
 
 <style scoped>
@@ -122,7 +157,7 @@ input:focus {
     outline: none;
 }
 
-textarea{
+textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -130,7 +165,7 @@ textarea{
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-textarea:focus{
+textarea:focus {
     border-color: #6a11cb;
     box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
     outline: none;

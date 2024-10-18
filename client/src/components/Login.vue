@@ -42,6 +42,7 @@ const login = async () => {
     });
 
     localStorage.setItem('token', response.data.token);
+    router.push({ name: 'Home' })
 
     router.push('/home');
   } catch (error) {

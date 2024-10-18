@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 // Component
-import Register from "./components/Register.vue";
-import InputHistory from "./components/InputHistory.vue";
-import Home from "./components/Home.vue";
-import Login from "./components/Login.vue";
-import ManageHistory from "./components/ManageHistory.vue";
-import ManageUser from "./components/ManageUser.vue";
+import Register from './../Register.vue'
+import InputHistory from './../InputHistory.vue'
+import Home from './../Home.vue'
+import Login from './../Login.vue'
+import ManageHistory from "../ManageHistory.vue";
+import ManageUser from "../ManageUser.vue";
+import { getAuth } from "./auth";
 
 
 const routes = [
@@ -45,6 +46,16 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes
+})
+
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = getAuth()
+
+    if(to.meta.reqiresAuth && !isAuthenticated){
+        next({ name: 'Login'});
+    }else{
+        next()
+    }
 })
 
 export default router

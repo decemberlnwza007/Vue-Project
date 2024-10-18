@@ -2,20 +2,24 @@
     <div>
         <Navbar />
     </div>
-    <br>
-    <br>
-    <br>
+    <br />
+    <br />
+    <br />
     <div class="my-5">
         <div class="content">
             <div class="container body shadow mb-5 p-5 rounded">
                 <!-- Search Input -->
                 <div class="row mb-4">
                     <div class="col-md-8 mx-auto">
-                        <input v-model="searchQuery" type="text" class="form-control"
-                            placeholder="Search by name or address..." />
+                        <input
+                            v-model="searchQuery"
+                            type="text"
+                            class="form-control"
+                            placeholder="Search by name or address..."
+                        />
                     </div>
                 </div>
-                <table class="table">
+                <table class="table table-responsive">
                     <thead align="center">
                         <tr>
                             <th>ID</th>
@@ -69,7 +73,7 @@ const filteredUsers = computed(() => {
             item.user_fname.toLowerCase().includes(query) ||
             item.user_lname.toLowerCase().includes(query) ||
             item.birthday.toLowerCase().includes(query) ||
-            item.phone.toLowerCase().includes(query)
+            item.user_phone.toLowerCase().includes(query)
         );
     });
 });
@@ -131,5 +135,18 @@ onMounted(() => {
     outline: none;
     border-color: #6a11cb;
     box-shadow: 0 0 5px rgba(106, 17, 203, 0.3);
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+    .table th,
+    .table td {
+        padding: 8px; /* Smaller padding on mobile */
+        font-size: 14px; /* Smaller text on mobile */
+    }
+
+    .form-control {
+        font-size: 14px; /* Smaller input text */
+    }
 }
 </style>
